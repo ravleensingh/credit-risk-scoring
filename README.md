@@ -137,7 +137,9 @@ For the lending advisor page only, optionally add a Groq API key. Create a key a
 cp .env.example .env  # macOS/Linux
 ```
 
-Set `GROQ_API_KEY` in `.env`. Alternatively, add the key to Streamlit Cloud's app secrets. Do not commit `.env` or `.streamlit/secrets.toml`; both are ignored by Git. The primary Random Forest prediction page does not need an API key.
+Set `GROQ_API_KEY` in `.env`. The advisor defaults to `openai/gpt-oss-120b`, Groq's recommended replacement for the retired `llama-3.3-70b-versatile` model. You can override the model with `GROQ_MODEL` if needed. Alternatively, add `GROQ_API_KEY` under Streamlit Cloud's app secrets. Do not commit `.env` or `.streamlit/secrets.toml`; both are ignored by Git. The primary Random Forest prediction page does not need an API key.
+
+See Groq's [model catalog](https://console.groq.com/docs/models) and [deprecation guide](https://console.groq.com/docs/deprecations) for current model availability.
 
 To explore the notebook, install Jupyter separately if needed and open `notebooks/eda.ipynb`. It locates the dataset from the current directory or its parent directories, so it works when Jupyter is started from the repository root or `notebooks/`.
 

@@ -5,13 +5,16 @@ from agent.rag import retrieve
 import os
 
 
+DEFAULT_GROQ_MODEL = "openai/gpt-oss-120b"
+
+
 def _get_llm():
     api_key = os.environ.get('GROQ_API_KEY')
     if not api_key:
         raise ValueError('GROQ_API_KEY is not configured.')
 
     return ChatGroq(
-        model='llama-3.3-70b-versatile',
+        model=os.environ.get('GROQ_MODEL', DEFAULT_GROQ_MODEL),
         temperature=0.2,
         api_key=api_key
     )
