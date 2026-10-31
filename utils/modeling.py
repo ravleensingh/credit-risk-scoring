@@ -16,6 +16,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+from utils.runtime import PROJECT_ROOT
 from utils.preprocessing import (
     CATEGORICAL_COLS,
     FEATURE_ORDER,
@@ -27,7 +28,6 @@ from utils.preprocessing import (
 )
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
 MODEL_ARTIFACT_PATH = PROJECT_ROOT / "models" / "credit_risk_pipeline.joblib"
 ARTIFACT_VERSION = 2
 MODEL_RANDOM_STATE = 42

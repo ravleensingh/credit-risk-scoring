@@ -1,12 +1,9 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
-
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+from utils.runtime import PROJECT_ROOT
 TARGET_COL = 'loan_paid_back'
 FEATURE_ORDER = [
     'age', 'gender', 'marital_status', 'education_level', 'annual_income',

@@ -1,12 +1,15 @@
 import streamlit as st
-import sys
 import os
+import sys
+from pathlib import Path
+
+from streamlit.errors import StreamlitSecretNotFoundError
 from dotenv import load_dotenv
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
-# Load environment variables from .env
-load_dotenv()
+load_dotenv(PROJECT_ROOT / ".env")
 
 from utils.input_options import (
     EDUCATION_LEVEL_OPTIONS,
@@ -59,10 +62,12 @@ st.markdown("### AI-powered credit assessment with regulatory compliance")
 st.markdown("---")
 
 # Load Groq API key - try Streamlit secrets first (for Cloud), then .env (for local development)
-try:
-    groq_key = st.secrets["GROQ_API_KEY"]
-except KeyError:
-    groq_key = os.getenv('GROQ_API_KEY')
+groq_key = os.getenv('GROQ_API_KEY')
+if not groq_key:
+    try:
+        groq_key = st.secrets["GROQ_API_KEY"]
+    except (KeyError, StreamlitSecretNotFoundError):
+        groq_key = None
 
 if not groq_key:
     st.error(

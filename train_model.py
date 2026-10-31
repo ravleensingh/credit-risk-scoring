@@ -6,7 +6,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import classification_report, confusion_matrix, roc_curve
-from pathlib import Path
 
 from utils.modeling import (
     MODEL_MAX_DEPTH,
@@ -16,8 +15,9 @@ from utils.modeling import (
     train_random_forest_pipeline,
 )
 from utils.preprocessing import load_data
+from utils.runtime import PROJECT_ROOT
 
-VISUALIZATIONS_DIR = Path('visualizations')
+VISUALIZATIONS_DIR = PROJECT_ROOT / 'visualizations'
 
 
 def plot_confusion_matrix(y_test, y_pred, accuracy):
@@ -29,7 +29,7 @@ def plot_confusion_matrix(y_test, y_pred, accuracy):
     plt.ylabel('Actual', fontsize=12)
     plt.xlabel('Predicted', fontsize=12)
     plt.tight_layout()
-    plt.savefig('visualizations/final_confusion_matrix.png', dpi=300, bbox_inches='tight')
+    plt.savefig(VISUALIZATIONS_DIR / 'final_confusion_matrix.png', dpi=300, bbox_inches='tight')
     print("Saved: visualizations/final_confusion_matrix.png")
 
 def plot_roc_curve(y_test, y_pred_proba, roc_auc):
@@ -46,7 +46,7 @@ def plot_roc_curve(y_test, y_pred_proba, roc_auc):
     plt.legend(loc="lower right")
     plt.grid(alpha=0.3)
     plt.tight_layout()
-    plt.savefig('visualizations/final_roc_curve.png', dpi=300, bbox_inches='tight')
+    plt.savefig(VISUALIZATIONS_DIR / 'final_roc_curve.png', dpi=300, bbox_inches='tight')
     print("Saved: visualizations/final_roc_curve.png")
 
 def plot_feature_importance(model, feature_names):
@@ -59,7 +59,7 @@ def plot_feature_importance(model, feature_names):
     plt.xlabel('Importance', fontsize=12)
     plt.title('Top 10 Most Important Features', fontsize=14, fontweight='bold')
     plt.tight_layout()
-    plt.savefig('visualizations/final_feature_importance.png', dpi=300, bbox_inches='tight')
+    plt.savefig(VISUALIZATIONS_DIR / 'final_feature_importance.png', dpi=300, bbox_inches='tight')
     print("Saved: visualizations/final_feature_importance.png")
 
 def train_model():
@@ -99,7 +99,7 @@ def train_model():
     
     print("\nSaving model parameters...")
     top_features = feature_contributions.head(10)
-    with open('models/model_params.py', 'w') as f:
+    with (PROJECT_ROOT / 'models' / 'model_params.py').open('w', encoding='utf-8') as f:
         f.write(f'model_type = "RandomForest"\n')
         f.write(f'n_estimators = {MODEL_N_ESTIMATORS}\n')
         f.write(f'max_depth = {MODEL_MAX_DEPTH}\n')

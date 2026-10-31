@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 from models.model_params import accuracy, roc_auc
+from utils.runtime import PROJECT_ROOT
 from utils.input_options import (
     EDUCATION_LEVEL_OPTIONS,
     EMPLOYMENT_STATUS_OPTIONS,
@@ -29,9 +30,9 @@ st.sidebar.info(
 
 st.sidebar.markdown("###  Model Performance")
 try:
-    img_cm = Image.open('visualizations/final_confusion_matrix.png')
+    img_cm = Image.open(PROJECT_ROOT / 'visualizations' / 'final_confusion_matrix.png')
     st.sidebar.image(img_cm, caption='Confusion Matrix', use_container_width=True)
-    img_roc = Image.open('visualizations/final_roc_curve.png')
+    img_roc = Image.open(PROJECT_ROOT / 'visualizations' / 'final_roc_curve.png')
     st.sidebar.image(img_roc, caption='ROC Curve', use_container_width=True)
 except Exception:
     st.sidebar.warning("Visualizations not found. Run train_model.py first.")

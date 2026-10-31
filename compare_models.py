@@ -6,7 +6,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from pathlib import Path
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -14,8 +13,9 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.pipeline import Pipeline
 
 from utils.modeling import build_preprocessor, compute_permutation_feature_importance, get_train_test_data
+from utils.runtime import PROJECT_ROOT
 
-VISUALIZATIONS_DIR = Path('visualizations')
+VISUALIZATIONS_DIR = PROJECT_ROOT / 'visualizations'
 
 def plot_confusion_matrices(models_results, y_test):
     VISUALIZATIONS_DIR.mkdir(parents=True, exist_ok=True)
@@ -27,7 +27,7 @@ def plot_confusion_matrices(models_results, y_test):
         axes[idx].set_ylabel('Actual')
         axes[idx].set_xlabel('Predicted')
     plt.tight_layout()
-    plt.savefig('visualizations/confusion_matrices.png', dpi=300, bbox_inches='tight')
+    plt.savefig(VISUALIZATIONS_DIR / 'confusion_matrices.png', dpi=300, bbox_inches='tight')
     print("Saved: visualizations/confusion_matrices.png")
 
 def plot_roc_curves(models_results, y_test):
@@ -42,7 +42,7 @@ def plot_roc_curves(models_results, y_test):
     plt.title('ROC Curves - Model Comparison', fontsize=14, fontweight='bold')
     plt.legend(loc='lower right', fontsize=10)
     plt.grid(alpha=0.3)
-    plt.savefig('visualizations/roc_curves.png', dpi=300, bbox_inches='tight')
+    plt.savefig(VISUALIZATIONS_DIR / 'roc_curves.png', dpi=300, bbox_inches='tight')
     print("Saved: visualizations/roc_curves.png")
 
 def plot_metrics_comparison(results_df):
@@ -70,7 +70,7 @@ def plot_metrics_comparison(results_df):
     ax.legend()
     ax.grid(axis='y', alpha=0.3)
     plt.tight_layout()
-    plt.savefig('visualizations/metrics_comparison.png', dpi=300, bbox_inches='tight')
+    plt.savefig(VISUALIZATIONS_DIR / 'metrics_comparison.png', dpi=300, bbox_inches='tight')
     print("Saved: visualizations/metrics_comparison.png")
 
 def plot_feature_importance(model, feature_names):
@@ -83,7 +83,7 @@ def plot_feature_importance(model, feature_names):
     plt.xlabel('Importance', fontsize=12)
     plt.title('Top 10 Feature Importance', fontsize=14, fontweight='bold')
     plt.tight_layout()
-    plt.savefig('visualizations/feature_importance.png', dpi=300, bbox_inches='tight')
+    plt.savefig(VISUALIZATIONS_DIR / 'feature_importance.png', dpi=300, bbox_inches='tight')
     print("Saved: visualizations/feature_importance.png")
 
 def compare_models():

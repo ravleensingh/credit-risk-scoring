@@ -9,6 +9,7 @@ ENV/
 .ipynb_checkpoints
 .DS_Store
 .env
+.streamlit/secrets.toml
 *.csv.gz
 .cache/
 models/*.joblib

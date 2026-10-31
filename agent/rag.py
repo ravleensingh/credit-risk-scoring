@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import os
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -13,6 +13,7 @@ _retriever_type = None
 _retriever_backend = None
 _tfidf_vectorizer = None
 _tfidf_matrix = None
+REGULATIONS_PATH = Path(__file__).resolve().parent.parent / "data" / "regulations.txt"
 
 
 def _load_regulations(filepath: str) -> list[str]:
@@ -73,12 +74,7 @@ def get_retriever():
             'matrix': _tfidf_matrix,
         }
 
-    # Try __file__-relative path first, fall back to cwd-relative path
-    candidate = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'data', 'regulations.txt'))
-    if not os.path.exists(candidate):
-        candidate = os.path.join('data', 'regulations.txt')
-
-    _chunks = _load_regulations(candidate)
+    _chunks = _load_regulations(str(REGULATIONS_PATH))
 
     try:
         _embedder, _index = _try_build_semantic_retriever(_chunks)

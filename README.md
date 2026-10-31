@@ -126,20 +126,20 @@ credit-risk-scoring/
 ```bash
 git clone https://github.com/ravleensingh/credit-risk-scoring.git
 cd credit-risk-scoring
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-For the lending advisor page, add a Groq API key:
+The app and scripts resolve datasets, visualizations, and generated model files relative to the repository, so commands can be run from the repository root or another working directory.
+
+For the lending advisor page only, optionally add a Groq API key. Create a key at [Groq Console](https://console.groq.com/keys), then create a `.env` file in the repository root:
 
 ```bash
-cp .env.example .env
+cp .env.example .env  # macOS/Linux
 ```
 
-Then edit `.env` and set:
+Set `GROQ_API_KEY` in `.env`. Alternatively, add the key to Streamlit Cloud's app secrets. Do not commit `.env` or `.streamlit/secrets.toml`; both are ignored by Git. The primary Random Forest prediction page does not need an API key.
 
-```bash
-GROQ_API_KEY=your_groq_api_key_here
-```
+To explore the notebook, install Jupyter separately if needed and open `notebooks/eda.ipynb`. It locates the dataset from the current directory or its parent directories, so it works when Jupyter is started from the repository root or `notebooks/`.
 
 ## Usage
 
@@ -160,6 +160,8 @@ python compare_models.py
 ```bash
 streamlit run app.py
 ```
+
+Open the local app at `http://localhost:8501`. The lending advisor is available in the app's **Lending Advisor** page; its Groq-powered workflow needs a valid `GROQ_API_KEY`.
 
 ## Testing
 
